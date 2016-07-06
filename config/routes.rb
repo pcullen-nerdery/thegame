@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
   namespace :admin do
     resources :effects
-    resources :items
+    resources :items do
+      post 'use', on: :member
+    end
 
-    root to: "effects#index"
+    root to: "items#index"
   end
 end
