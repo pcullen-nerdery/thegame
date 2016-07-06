@@ -2,11 +2,11 @@ class Item < ApplicationRecord
 
 	def use(target)
 		if target
-			Game.post("/items/use/#{guid}?target=#{target}")
+			::Game.post("/items/use/#{guid}?target=#{target}")
 		else
-			Game.post("/items/use/#{guid}")
+			::Game.post("/items/use/#{guid}")
 		end
 
-		Item.update(status: 'Used')
+		self.update(status: 'Used')
 	end
 end
