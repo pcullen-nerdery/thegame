@@ -1,1 +1,1 @@
-gatherer: bundle exec rake gather
+worker: bundle exec rake gather
