@@ -1,6 +1,6 @@
 class Item < ApplicationRecord
 
-	def use(target)
+	def use(target = nil)
 		if target
 			::Game.post("/items/use/#{guid}?target=#{target}")
 		else
