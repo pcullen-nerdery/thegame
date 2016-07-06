@@ -1,1 +1,1 @@
-web: bundle exec rails s
+gatherer: bundle exec rake gather
