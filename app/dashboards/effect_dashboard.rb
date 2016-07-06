@@ -14,7 +14,7 @@ class EffectDashboard < Administrate::BaseDashboard
     target: Field::String,
     name: Field::String,
     effect_type: Field::String,
-    vote_gain: Field::String,
+    vote_gain: Field::Number,
     description: Field::String,
     details: Field::Text,
     created_at: Field::DateTime,
