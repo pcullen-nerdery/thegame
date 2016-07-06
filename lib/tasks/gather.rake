@@ -21,7 +21,7 @@ task gather: :environment do
       end
 
       Rails.logger.info result
-      sleep 1.5
+      sleep 2
     rescue Net::ReadTimeout, Errno::ETIMEDOUT, Net::OpenTimeout
       puts 'timeout, retrying'
       retry
