@@ -2,6 +2,9 @@ require 'json'
 require 'httparty'
 
 task gather: :environment do
+  # wait 1 second to start up (for deployments, so we don't send off too quickly)
+  sleep 1
+
   while true do
     begin
       result = Game.post('/points', {'verbose': true}).body

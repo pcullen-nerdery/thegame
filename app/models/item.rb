@@ -2,9 +2,9 @@ class Item < ApplicationRecord
 
 	def use(target = nil)
 		if target
-			::Game.post("/items/use/#{guid}?target=#{target}")
+			Rails.logger.info ::Game.post("/items/use/#{guid}?target=#{target}")
 		else
-			::Game.post("/items/use/#{guid}")
+			Rails.logger.info ::Game.post("/items/use/#{guid}")
 		end
 
 		self.update(status: 'Used')
