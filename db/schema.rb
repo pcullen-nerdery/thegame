@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160706184354) do
+ActiveRecord::Schema.define(version: 20160706231137) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,12 +20,14 @@ ActiveRecord::Schema.define(version: 20160706184354) do
     t.string   "creator"
     t.string   "target"
     t.string   "name"
-    t.string   "type"
-    t.string   "vote_gain"
+    t.string   "effect_type"
+    t.integer  "vote_gain"
     t.string   "description"
     t.text     "details"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "fingerprint"
+    t.index ["fingerprint"], name: "index_effects_on_fingerprint", using: :btree
   end
 
   create_table "items", force: :cascade do |t|

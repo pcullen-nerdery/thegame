@@ -11,4 +11,12 @@ class Item < ApplicationRecord
 		Rails.logger.info result
 		result
 	end
+
+
+	def self.use_items(items = [])
+		items.each do |item|
+			result = Item.find_by_guid(item).use!
+			sleep 70
+		end
+	end
 end
