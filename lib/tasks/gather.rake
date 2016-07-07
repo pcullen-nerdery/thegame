@@ -22,7 +22,7 @@ task gather: :environment do
       end
 
       Rails.logger.info result
-      sleep 2
+      sleep 1.2
     rescue Net::ReadTimeout, Errno::ETIMEDOUT, Net::OpenTimeout, JSON::ParserError => e
       puts "rescued `#{e.class.name}`, retrying"
       sleep 2

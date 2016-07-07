@@ -18,8 +18,8 @@ module Admin
       last_used = File.read("#{Rails.root}/tmp/last_used_time") 
 
       if DateTime.parse(last_used) > 1.minute.ago
-        flash[:error] ||= []
-        flash[:error] << "You used an item at #{last_used}. Wait #{DateTime.parse(last_used).to_i - 1.minute.ago.to_i} seconds"
+        flash.now[:error] = []
+        flash.now[:error] << "You used an item at #{last_used}. Wait #{DateTime.parse(last_used).to_i - 1.minute.ago.to_i} seconds"
       end
     end
 
