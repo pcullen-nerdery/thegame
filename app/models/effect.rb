@@ -2,7 +2,7 @@ require 'digest/md5'
 
 class Effect < ApplicationRecord
 	
-	scope :current_game, -> { where.not(status: 'Previous Game') }
+	scope :current_game, -> { where("status != 'Previous Game' or status is null") }
 
 	def self.create_from_url(url = nil)
 		return unless url

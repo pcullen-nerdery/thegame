@@ -1,6 +1,6 @@
 class Item < ApplicationRecord
-	scope :current_game, -> { where.not(status: 'Previous Game') }
-	scope :unused, -> { where.not(status: 'Used') }
+	scope :current_game, -> { where("status != 'Previous Game' or status is null") }
+	scope :unused, -> { where("status != 'Used' or status is null") }
 
 	def use!(target = nil)
 		if target
@@ -9,6 +9,10 @@ class Item < ApplicationRecord
 			result = ::Game.post("/items/use/#{guid}")
 		end
 		self.update(status: 'Used')
+
+		File.open("#{Rails.root}/tmp/last_used_time", 'w') do |f|
+			f.write Time.now
+		end
 
 		Rails.logger.info result
 		result

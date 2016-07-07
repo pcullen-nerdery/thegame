@@ -6,6 +6,7 @@ task gather_effects: :environment do
 		begin
 			Effect.create_from_url("/effects")
 			puts "effects retrival complete"
+			sleep 5
 		rescue Net::ReadTimeout, Errno::ETIMEDOUT, Net::OpenTimeout, JSON::ParserError => e
 			puts "rescued `#{e.class.name}`, retrying"
 			sleep 2
