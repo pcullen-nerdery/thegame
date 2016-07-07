@@ -18,7 +18,8 @@ module Admin
     
     def use
       item = Item.find_by!(id: params[:id])
-      flash[:notice] = item.use!
+      result = item.use!
+      flash[:notice] = "#{Time.now} - #{result}"
       redirect_to admin_items_path
     end
   end

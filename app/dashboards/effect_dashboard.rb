@@ -32,6 +32,7 @@ class EffectDashboard < Administrate::BaseDashboard
     :effect_type,
     :vote_gain,
     :name,
+    :details,
     :creator,
     :target,
   ].freeze
