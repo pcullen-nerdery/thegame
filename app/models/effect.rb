@@ -12,7 +12,7 @@ class Effect < ApplicationRecord
 			fingerprint = Digest::MD5.hexdigest(the_long_string)
 
 			if Effect.find_by_fingerprint(fingerprint)
-				puts "skipping #{fingerprint}"
+				# puts "skipping #{fingerprint}"
 				next
 			end
 
