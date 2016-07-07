@@ -5,6 +5,7 @@ task gather: :environment do
   # wait 1 second to start up (for deployments, so we don't send off too quickly)
   sleep 1
 
+  # puts "Starting thread for gathering points"
   while true do
     begin
       result = Game.post('/points', {'verbose': true}).body
@@ -26,5 +27,5 @@ task gather: :environment do
       puts 'timeout, retrying'
       retry
     end
-  end
+  end  
 end
