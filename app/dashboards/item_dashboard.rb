@@ -27,6 +27,7 @@ class ItemDashboard < Administrate::BaseDashboard
     # :id,
     :guid,
     :name,
+    :status,
     :description,
     :rarity,
   ].freeze
