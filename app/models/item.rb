@@ -1,4 +1,6 @@
 class Item < ApplicationRecord
+	scope :current_game, -> { where.not(status: 'Previous Game') }
+	scope :unused, -> { where.not(status: 'Used') }
 
 	def use!(target = nil)
 		if target
