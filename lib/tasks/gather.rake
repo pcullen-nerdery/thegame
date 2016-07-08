@@ -47,7 +47,7 @@ task gather: :environment do
         end
       end
 
-    rescue Net::ReadTimeout, Errno::ETIMEDOUT, Net::OpenTimeout, JSON::ParserError => e
+    rescue Net::ReadTimeout, Errno::ETIMEDOUT, Net::OpenTimeout, JSON::ParserError, Item::NoSuchItem => e
       puts "rescued `#{e.class.name}`, retrying"
       sleep 2
       retry

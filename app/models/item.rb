@@ -2,6 +2,9 @@ class Item < ApplicationRecord
 	scope :current_game, -> { where("status != 'Previous Game' or status is null") }
 	scope :unused, -> { where("status != 'Used' or status is null") }
 
+	class ItemNotFound < RuntimeError
+	end
+
 	def self.item_recently_used?
 		item_last_used = PersistedValue.find_or_create_by(key: 'item_last_used')
 
@@ -19,6 +22,10 @@ class Item < ApplicationRecord
 			result = ::Game.post("/items/use/#{guid}")
 		end
 		self.update(status: 'Used')
+
+		if result.contains? "No such item found"
+			raise Item::ItemNotFound
+		end
 
 		item_last_used = PersistedValue.find_or_initialize_by(key: 'item_last_used')
 		item_last_used.value_datetime = Time.now

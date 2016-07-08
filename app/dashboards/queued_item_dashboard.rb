@@ -11,6 +11,7 @@ class QueuedItemDashboard < Administrate::BaseDashboard
     item: Field::BelongsTo,
     id: Field::Number,
     status: Field::String,
+    item_name: Field::String,
     location: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -22,8 +23,8 @@ class QueuedItemDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :item,
     :id,
+    :item_name,
     :status,
     :location,
   ].freeze
@@ -33,6 +34,7 @@ class QueuedItemDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :item,
     :id,
+    :item_name,
     :status,
     :location,
     :created_at,
