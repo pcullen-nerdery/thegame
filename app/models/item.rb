@@ -23,8 +23,15 @@ class Item < ApplicationRecord
 		end
 		self.update(status: 'Used')
 
-		if result.to_s.include? "No such item found" || result.to_s.include? "Invalid item"
-			raise Exceptions::NoSuchItem
+		if result.to_s.include?("No such item found") || result.to_s.include?("Invalid item")
+			another_item_to_try = Item.unused.where(name: name).first
+			if another_item_to_try
+				Rails.logger.info "tried using #{name}. will try another."
+				another_item_to_try.use!
+			else
+				Rails.logger.info "tried using #{name}.  there are no others, giving up."
+				raise Exceptions::NoSuchItem
+			end
 		end
 
 		item_last_used = PersistedValue.find_or_initialize_by(key: 'item_last_used')
