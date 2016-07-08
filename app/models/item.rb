@@ -2,7 +2,7 @@ class Item < ApplicationRecord
 	scope :current_game, -> { where("status != 'Previous Game' or status is null") }
 	scope :unused, -> { where("status != 'Used' or status is null") }
 
-	class ItemNotFound < RuntimeError
+	class NoSuchItem < RuntimeError
 	end
 
 	def self.item_recently_used?
@@ -24,7 +24,7 @@ class Item < ApplicationRecord
 		self.update(status: 'Used')
 
 		if result.contains? "No such item found"
-			raise Item::ItemNotFound
+			raise Exceptions::NoSuchItem
 		end
 
 		item_last_used = PersistedValue.find_or_initialize_by(key: 'item_last_used')
