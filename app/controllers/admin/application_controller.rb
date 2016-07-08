@@ -14,12 +14,10 @@ module Admin
     end
 
     def display_item_recently_used_warning
-      return unless File.file?("#{Rails.root}/tmp/last_used_time")
-      last_used = File.read("#{Rails.root}/tmp/last_used_time") 
-
-      if DateTime.parse(last_used) > 1.minute.ago
+      recently_used = Item.item_recently_used?
+      if recently_used
         flash.now[:error] = []
-        flash.now[:error] << "You used an item at #{last_used}. Wait #{DateTime.parse(last_used).to_i - 1.minute.ago.to_i} seconds"
+        flash.now[:error] << recently_used
       end
     end
 

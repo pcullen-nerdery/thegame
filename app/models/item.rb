@@ -2,6 +2,16 @@ class Item < ApplicationRecord
 	scope :current_game, -> { where("status != 'Previous Game' or status is null") }
 	scope :unused, -> { where("status != 'Used' or status is null") }
 
+	def self.item_recently_used?
+		item_last_used = PersistedValue.find_or_create_by(key: 'item_last_used')
+
+		if item_last_used.value_datetime && item_last_used.value_datetime > 1.minute.ago
+			return "You used an item at #{item_last_used.value_datetime.to_s}. Wait #{item_last_used.value_datetime.in_time_zone.to_i - 1.minute.ago.in_time_zone.to_i} seconds"
+		end
+
+		return false
+	end
+
 	def use!(target = nil)
 		if target
 			result = ::Game.post("/items/use/#{guid}?target=#{target}")
@@ -10,9 +20,9 @@ class Item < ApplicationRecord
 		end
 		self.update(status: 'Used')
 
-		File.open("#{Rails.root}/tmp/last_used_time", 'w') do |f|
-			f.write Time.now
-		end
+		item_last_used = PersistedValue.find_or_initialize_by(key: 'item_last_used')
+		item_last_used.value_datetime = Time.now
+		item_last_used.save
 
 		Rails.logger.info result
 		result

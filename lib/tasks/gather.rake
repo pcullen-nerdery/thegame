@@ -8,6 +8,12 @@ task gather: :environment do
   # puts "Starting thread for gathering points"
   while true do
     begin
+
+      recently_used_text = Item.item_recently_used?
+      if recently_used_text
+        Rails.logger.info recently_used_text
+      end
+
       result = Game.post('/points', {'verbose': true}).body
 
       item = JSON.parse(result)['Item']

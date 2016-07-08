@@ -8,7 +8,7 @@ module Admin
       resources = Administrate::Search.new(resource_resolver, search_term).run
       resources = order.apply(resources)
         .unused
-        .current_game
+        # .current_game
 
       resources = resources.page(params[:page]).per(records_per_page)
       page = Administrate::Page::Collection.new(dashboard, order: order)

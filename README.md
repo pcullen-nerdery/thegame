@@ -1,24 +1,19 @@
-# README
+valuable combos
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+warthog - 15 minutes  (gives boost every once in a while)
+miniature giant space hamster - 30 minutes  (double)
+moogle - 30 minutes  (gives boost every once in a while)
+rush the dog - 60 minutes  (bost every once in a while?)
+7777 - 7 minutes  (multiply by 7)
+varia suit - 60 minutes
 
-Things you may want to cover:
+"Miniature Giant Space Hamster","Warthog","Moogle","Rush the Dog"
+	2 points, 6 sometimes, 60 sometimes
 
-* Ruby version
 
-* System dependencies
+"Moogle","Rush the Dog","Varia Suit"
+	1, 3, 30
 
-* Configuration
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+"Miniature Giant Space Hamster","Varia Suit","Moogle","7777","Warthog"
+	14, 42
