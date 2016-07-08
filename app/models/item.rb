@@ -23,7 +23,7 @@ class Item < ApplicationRecord
 		end
 		self.update(status: 'Used')
 
-		if result.to_s.include? "No such item found"
+		if result.to_s.include? "No such item found" || result.to_s.include? "Invalid item"
 			raise Exceptions::NoSuchItem
 		end
 
