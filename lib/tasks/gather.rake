@@ -5,8 +5,14 @@ task gather: :environment do
 
 
   def use_queued_item(queued_item)
-    queued_item.item.use!
-    queued_item.update(status: 'Used')
+    begin
+      queued_item.item.use!
+      queued_item.update(status: 'Used')
+    rescue Exceptions::NoSuchItem => e
+      queued_item.update(status: 'Used')
+      raise e
+    end
+
     sleep 0.5
   end
 
