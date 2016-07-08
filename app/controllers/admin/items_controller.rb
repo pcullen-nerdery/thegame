@@ -34,6 +34,11 @@ module Admin
       redirect_to admin_items_path
     end
 
+    def queue
+      item = Item.find_by!(id: params[:id])
+      QueuedItem.create(item: item)
+      redirect_to admin_items_path
+    end
 
   end
 end

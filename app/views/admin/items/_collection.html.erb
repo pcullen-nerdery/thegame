@@ -53,7 +53,7 @@ to display a collection of resources in an HTML table.
 
   <tbody>
     <% resources.each do |resource| %>
-      <tr class="table__row"
+      <tr class=""
           role="link"
           tabindex="0"
           data-url="<%= polymorphic_path([namespace, resource]) -%>"
@@ -63,6 +63,10 @@ to display a collection of resources in an HTML table.
             <%= render_field attribute %>
           </td>
         <% end %>
+
+        <td>
+          <%= link_to('Queue', queue_admin_item_path(resource), method: :post) unless QueuedItem.unused.map(&:item).include? resource %>
+        </td>
 
         <td>
           <%= link_to 'Use', use_admin_item_path(resource), method: :post %>

@@ -8,6 +8,7 @@ module Admin
   class ApplicationController < Administrate::ApplicationController
     before_action :authenticate_admin
     before_action :display_item_recently_used_warning
+    before_action :display_queued_items
 
     def authenticate_admin
       # TODO Add authentication logic here.
@@ -19,6 +20,12 @@ module Admin
         flash.now[:error] = []
         flash.now[:error] << recently_used
       end
+    end
+
+    def display_queued_items
+      return if QueuedItem.unused.empty?
+      flash.now[:notice] ||= []
+      flash.now[:notice] << "Queued items: #{QueuedItem.unused.order('location asc').map(&:item).map(&:name).join(", ")}"
     end
 
     # Override this value to specify the number of elements to display at a time

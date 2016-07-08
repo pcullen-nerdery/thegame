@@ -39,7 +39,7 @@ task gather: :environment do
       if Item.item_recently_used?
         gather_points
       else
-        queued_item = QueuedItem.where(status: nil).order('location asc').first
+        queued_item = QueuedItem.unused.order('location asc').first
         if queued_item
           use_queued_item(queued_item)
         else
