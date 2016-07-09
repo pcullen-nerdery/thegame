@@ -7,6 +7,8 @@ rush the dog - 60 minutes  (bost every once in a while?)
 7777 - 7 minutes  (multiply by 7)
 varia suit - 60 minutes
 
+bullet bill - goes ahead of a person in front of you
+
 "Miniature Giant Space Hamster","Warthog","Moogle","Rush the Dog"
 	2 points, 6 sometimes, 60 sometimes
 

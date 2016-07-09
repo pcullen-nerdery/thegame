@@ -12,6 +12,7 @@ class QueuedItemDashboard < Administrate::BaseDashboard
     id: Field::Number,
     status: Field::String,
     item_name: Field::String,
+    target: Field::String,
     location: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -25,6 +26,7 @@ class QueuedItemDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :id,
     :item_name,
+    :target,
     :status,
     :location,
   ].freeze
@@ -35,6 +37,7 @@ class QueuedItemDashboard < Administrate::BaseDashboard
     :item,
     :id,
     :item_name,
+    :target,
     :status,
     :location,
     :created_at,
@@ -46,6 +49,7 @@ class QueuedItemDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :item,
+    :target,
     :status,
     :location,
   ].freeze

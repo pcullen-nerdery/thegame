@@ -29,16 +29,15 @@ module Admin
     
     def use
       item = Item.find_by!(id: params[:id])
-      result = item.use!
+      result = item.use!(params[:target])
       flash[:notice] = "#{Time.now} - #{result}"
       redirect_to admin_items_path
     end
 
     def queue
       item = Item.find_by!(id: params[:id])
-      QueuedItem.create(item: item)
+      QueuedItem.create(item: item, target: params[:target])
       redirect_to admin_items_path
     end
-
   end
 end

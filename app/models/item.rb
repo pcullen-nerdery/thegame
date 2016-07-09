@@ -5,6 +5,7 @@ class Item < ApplicationRecord
 	class NoSuchItem < RuntimeError
 	end
 
+
 	def self.item_recently_used?
 		item_last_used = PersistedValue.find_or_create_by(key: 'item_last_used')
 
