@@ -30,6 +30,13 @@ task gather: :environment do
       end
     end
 
+    # add gold ring to the queue if its not currently in effect, and if its not in the queue already
+    name = 'Gold Ring'
+    unless JSON.parse(result)['Effects'].include?(name) || QueuedItem.unused.map(&:item).map(&:name).include?(name)
+        item_to_queue = Item.unused.where(name: name).first
+        QueuedItem.create(item: item_to_queue, location: 0) if item_to_queue
+    end
+
     Rails.logger.info result
     sleep 1.2
   end

@@ -35,13 +35,6 @@ class Item < ApplicationRecord
 			end
 		end
 
-		# add gold ring to the queue if its not currently in effect, and if its not in the queue already
-        name = 'Gold Ring'
-        unless JSON.parse(result)['Effects'].include?(name) || QueuedItem.unused.map(&:item).map(&:name).include?(name)
-            item = Item.unused.where(name: name).first
-            QueuedItem.create(item: item, location: 0) if item
-        end
-
 		item_last_used = PersistedValue.find_or_initialize_by(key: 'item_last_used')
 		item_last_used.value_datetime = Time.now
 		item_last_used.save
