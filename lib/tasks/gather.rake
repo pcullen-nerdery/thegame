@@ -3,6 +3,14 @@ require 'httparty'
 
 task gather: :environment do
 
+  def ensure_effect_present
+    another_item_to_try = Item.unused.where(name: effect_name).first
+    if another_item_to_try
+      another_item_to_try.use!
+      return true
+    end
+    return false
+  end
 
   def use_queued_item(queued_item)
     begin
@@ -45,6 +53,10 @@ task gather: :environment do
       if Item.item_recently_used?
         gather_points
       else
+
+        next if ensure_effect_present('Gold Ring')
+
+        # use queued items
         queued_item = QueuedItem.unused.order('location asc').first
         if queued_item
           use_queued_item(queued_item)
