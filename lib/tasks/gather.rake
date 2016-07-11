@@ -3,6 +3,13 @@ require 'httparty'
 
 task gather: :environment do
 
+  def ensure_effect_in_place(current_effects, effect_name)
+    unless current_effects.include?(effect_name) || QueuedItem.unused.map(&:item).map(&:name).include?(effect_name)
+        item_to_queue = Item.unused.where(name: effect_name).first
+        QueuedItem.create(item: item_to_queue, location: 0) if item_to_queue
+    end
+  end
+
   def use_queued_item(queued_item)
     begin
       result = queued_item.item.use!(queued_item.target)
@@ -30,13 +37,11 @@ task gather: :environment do
       end
     end
 
-    # add gold ring to the queue if its not currently in effect, and if its not in the queue already
-    name = 'Gold Ring'
-    unless JSON.parse(result)['Effects'].include?(name) || QueuedItem.unused.map(&:item).map(&:name).include?(name)
-        item_to_queue = Item.unused.where(name: name).first
-        QueuedItem.create(item: item_to_queue, location: 0) if item_to_queue
+    current_effects = JSON.parse(result)['Effects']
+    if current_effects
+      ensure_effect_in_place(current_effects, 'Gold Ring')
     end
-
+    
     Rails.logger.info result
     sleep 1.2
   end
@@ -51,9 +56,6 @@ task gather: :environment do
       if Item.item_recently_used?
         gather_points
       else
-
-        # next if ensure_effect_present('Gold Ring')
-
         # use queued items
         queued_item = QueuedItem.unused.order('location asc').first
         if queued_item
