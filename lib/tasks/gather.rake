@@ -37,10 +37,10 @@ task gather: :environment do
       end
     end
 
-    current_effects = JSON.parse(result)['Effects']
-    if current_effects
-      ensure_effect_in_place(current_effects, 'Gold Ring')
-    end
+    # current_effects = JSON.parse(result)['Effects']
+    # if current_effects
+    #   ensure_effect_in_place(current_effects, 'Gold Ring')
+    # end
     
     Rails.logger.info result
     sleep 1.2
