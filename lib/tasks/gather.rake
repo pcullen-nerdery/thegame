@@ -3,19 +3,17 @@ require 'httparty'
 
 task gather: :environment do
 
-  def ensure_effect_present
-    another_item_to_try = Item.unused.where(name: effect_name).first
-    if another_item_to_try
-      another_item_to_try.use!
-      return true
-    end
-    return false
-  end
-
   def use_queued_item(queued_item)
     begin
-      queued_item.item.use!(queued_item.target)
+      result = queued_item.item.use!(queued_item.target)
       queued_item.update(status: 'Used')
+
+      # add gold ring to the queue if its not currently in effect, and if its not in the queue already
+      name = 'Gold Ring'
+      unless result.effects.include?(name) || QueuedItem.unused.map(&:item).map(&:name).include?(name)
+        item = Item.unused.where(name: name)
+        QueuedItem.create(item: item, location: 0) if item
+      end
     rescue Exceptions::NoSuchItem => e
       queued_item.update(status: 'Used')
       raise e
@@ -54,7 +52,7 @@ task gather: :environment do
         gather_points
       else
 
-        next if ensure_effect_present('Gold Ring')
+        # next if ensure_effect_present('Gold Ring')
 
         # use queued items
         queued_item = QueuedItem.unused.order('location asc').first
