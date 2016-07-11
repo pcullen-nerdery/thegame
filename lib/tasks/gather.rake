@@ -7,13 +7,6 @@ task gather: :environment do
     begin
       result = queued_item.item.use!(queued_item.target)
       queued_item.update(status: 'Used')
-
-      # add gold ring to the queue if its not currently in effect, and if its not in the queue already
-      name = 'Gold Ring'
-      unless result.effects.include?(name) || QueuedItem.unused.map(&:item).map(&:name).include?(name)
-        item = Item.unused.where(name: name)
-        QueuedItem.create(item: item, location: 0) if item
-      end
     rescue Exceptions::NoSuchItem => e
       queued_item.update(status: 'Used')
       raise e
